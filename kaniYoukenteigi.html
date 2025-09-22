@@ -1,178 +1,108 @@
 <!doctype html>
+<!--
+  ファイル名: kaniYoukenteigi.html
+  説明: 要件定義プロンプトジェネレーターの本体HTML。
+  目的: 入力フォームを提供し、CSSとJSを読み込んでプロンプト生成を行う。
+-->
+
+
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>プロンプトジェネレーター(ver.1 最小テスト)</title>
+  <title>プロンプトジェネレーター（簡易要件定義）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    /*--------------------------------------
-      このファイルは最小構成のテスト版です。
-　　　HTMLとJSで、作成しています。
-　　　必要な項目に答えると
-　　　AIが理解しやすいプロンプトが作れます。
-    --------------------------------------*/
-    :root{
-      --mainColor:#2563eb;         /* メインの青色 */
-      --columnSukima:40px;         /* 入力エリアと出力エリアのすきま */
-      --fieldSukima:16px;          /* 入力項目どうしの縦のすきま */
-      --inputPad:10px 12px;        /* 入力ボックス内側の余白 */
-    }
-    body{                          /* ページ全体の文字や余白 */
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
-      margin:20px;
-      line-height:1.6;
-    }
-    h1{margin:0 0 6px}
-    .description{margin:0 0 8px}
-    .container{                    /* 入力と出力を横に並べる */
-      display:flex;
-      gap:var(--columnSukima);
-      flex-wrap:wrap;              /* 狭い画面では折り返す */
-    }
-    .input-area,.output-area{      /* 左右のカラム共通設定 */
-      flex:1 1 420px;
-      min-width:340px;
-      display:flex;
-      flex-direction:column;
-    }
-    .field + .field{margin-top:var(--fieldSukima)}
-    .field label{font-weight:700;display:block;margin:0 0 4px}
-    .hosoku{font-size:.9em;color:#666;margin-bottom:6px} /* 補足説明（小さめ・灰色） */
-    .yougo{                        /* 用語：マウスオーバーで説明 */
-      color:var(--mainColor);
-      font-weight:700;
-      border-bottom:2px dotted var(--mainColor);
-      cursor:help;
-    }
-    input,textarea{                /* 入力欄と出力欄の共通装飾 */
-      width:100%;
-      box-sizing:border-box;
-      padding:var(--inputPad);
-      border:1px solid #ccc;
-      border-radius:8px;
-      font:inherit;
-    }
-    input::placeholder,textarea::placeholder{color:#999}
-    #output{flex:1;min-height:520px;resize:none} /* 出力欄の最低高さ */
-    .btn{                          /* ボタンの共通スタイル */
-      padding:10px 16px;
-      border-radius:8px;
-      font:inherit;
-      cursor:pointer;
-      border:none;
-      transition:opacity .2s;
-    }
-    .btn:hover{opacity:.9}
-    .btn-shuyou{background:var(--mainColor);color:#fff;font-weight:bold} /* 主要ボタン（青） */
-    .btn-huku{background:#f0f0f0}                                        /* 補助ボタン（灰） */
-    .button-bar{margin-top:24px;display:flex;justify-content:space-between;gap:10px}
-  </style>
+  <link rel="stylesheet" href="kaniYoukenteigi.css">
 </head>
 <body>
   <h1>プロンプトジェネレーター（簡易要件定義）</h1>
-  <p class="description">ここで<span class="yougo" title="要件定義：開発の目的・機能・制約などを整理し、関係者で共通認識を持つための工程。">要件定義</span>プロンプトを作成しておくと、AIとのすれ違いを減らし、効率的に開発を進められます。</p>
+  <p class="description">
+    ここで<span class="yougo" title="要件定義：開発の目的・機能・制約などを整理し、関係者で共通認識を持つための工程。">要件定義</span>
+    プロンプトを作成しておくと、AIとのすれ違いを減らし、効率的に開発を進められます。
+  </p>
 
   <div class="container">
     <div class="input-area">
-      <!-- 入力フォーム：label=項目名, hosoku=説明, placeholder=例文 -->
-      <div class="field"><label>アプリのジャンル</label><div class="hosoku">どんなアプリを作りますか？</div>
-	<input id="category" placeholder="例：シューティングゲーム、シンプル家計簿、服薬管理"></div>
+      <div class="field">
+        <label>アプリのジャンル</label>
+        <div class="hosoku">どんなアプリを作りますか？</div>
+        <input id="category" placeholder="例：シューティングゲーム、シンプル家計簿、服薬管理">
+      </div>
 
-      <div class="field"><label>メイン機能</label><div class="hosoku">このアプリの主な機能を説明してください。</div>
-	<input id="functions" placeholder="例：敵を倒してスコアを競う、収支をグラフ化、指定の時間に通知"></div>
+      <div class="field">
+        <label>メイン機能</label>
+        <div class="hosoku">このアプリの主な機能を説明してください。</div>
+        <input id="functions" placeholder="例：敵を倒してスコアを競う、収支をグラフ化、指定の時間に通知">
+      </div>
 
-      <div class="field"><label>制作目的</label><div class="hosoku">このアプリを作る目的は何ですか？</div>
-	<input id="goal" placeholder="例：プログラミング練習、自分の生活で使いたい、ポートフォリオ用"></div>
+      <div class="field">
+        <label>制作目的</label>
+        <div class="hosoku">このアプリを作る目的は何ですか？</div>
+        <input id="goal" placeholder="例：プログラミング練習、自分の生活で使いたい、ポートフォリオ用">
+      </div>
 
-      <div class="field"><label><span class="yougo" title="ターゲットユーザー：アプリを一番使ってほしい想定利用者層。UIや難易度の調整に重要。">ターゲットユーザー</span></label><div class="hosoku">想定ユーザーはどんな人ですか？</div>
-	<input id="target" placeholder="例：小学生、自分、お年寄り"></div>
+      <div class="field">
+        <label><span class="yougo" title="ターゲットユーザー：アプリを一番使ってほしい想定利用者層。UIや難易度の調整に重要。">ターゲットユーザー</span></label>
+        <div class="hosoku">想定ユーザーはどんな人ですか？</div>
+        <input id="target" placeholder="例：小学生、自分、お年寄り">
+      </div>
 
-      <div class="field"><label>プラットフォーム</label><div class="hosoku">どこでアプリを動かしますか？</div>
-	<input id="platform" placeholder="例：Webサイト、Android、決まっていない"></div>
+      <div class="field">
+        <label>プラットフォーム</label>
+        <div class="hosoku">どこでアプリを動かしますか？</div>
+        <input id="platform" placeholder="例：Webサイト、Android、決まっていない">
+      </div>
 
-      <div class="field"><label>使いたい言語・技術・サービス</label><div class="hosoku">あれば書いてください。API名・クラウドサービス・フレームワークなど</div>
-	<input id="technologies" placeholder="例：Java、React、Firebase、OpenWeatherMap API"></div>
+      <div class="field">
+        <label>使いたい言語・技術・サービス</label>
+        <div class="hosoku">あれば書いてください。API名・クラウドサービス・フレームワークなど</div>
+        <input id="technologies" placeholder="例：Java、React、Firebase、OpenWeatherMap API">
+      </div>
 
-      <div class="field"><label><span class="yougo" title="ハードウェア：センサーやマイコンなど、プログラム外で動作する部品や機器。">ハードウェア</span>を使用しますか？</label>
-	<div class="hosoku">あれば書いてください。型番もわかれば書いてください。</div>
-	<input id="hardware" placeholder="例：Arduino UNO、LED、温度センサー"></div>
+      <div class="field">
+        <label><span class="yougo" title="ハードウェア：センサーやマイコンなど、プログラム外で動作する部品や機器。">ハードウェア</span>を使用しますか？</label>
+        <div class="hosoku">あれば書いてください。型番もわかれば書いてください。</div>
+        <input id="hardware" placeholder="例：Arduino UNO、LED、温度センサー">
+      </div>
 
-      <div class="field"><label>スキル・学習情報</label><div class="hosoku">AIのサポートの参考になる学習情報を記入してください。</div>
-	<input id="skills" placeholder="例：プログラミング未経験、Java Silver学習中、C言語のみ経験"></div>
+      <div class="field">
+        <label>スキル・学習情報</label>
+        <div class="hosoku">AIのサポートの参考になる学習情報を記入してください。</div>
+        <input id="skills" placeholder="例：プログラミング未経験、Java Silver学習中、C言語のみ経験">
+      </div>
 
-      <div class="field"><label><span class="yougo" title="UI：ユーザーインターフェース。画面の見た目や使いやすさ。">UI</span></label><div class="hosoku">見た目や雰囲気の希望があれば書いてください。</div>
-	<input id="ui" placeholder="例：カラフルでポップ、緑と白のシンプル、大きな文字でボタンが少ない"></div>
+      <div class="field">
+        <label><span class="yougo" title="UI：ユーザーインターフェース。画面の見た目や使いやすさ。">UI</span></label>
+        <div class="hosoku">見た目や雰囲気の希望があれば書いてください。</div>
+        <input id="ui" placeholder="例：カラフルでポップ、緑と白のシンプル、大きな文字でボタンが少ない">
+      </div>
 
-      <div class="field"><label>スケジュール</label><div class="hosoku">製作期間や締め切りなどがあれば教えてください。</div>
-	<input id="schedule" placeholder="例：2週間後提出（1日2時間作業）"></div>
+      <div class="field">
+        <label>スケジュール</label>
+        <div class="hosoku">製作期間や締め切りなどがあれば教えてください。</div>
+        <input id="schedule" placeholder="例：2週間後提出（1日2時間作業）">
+      </div>
 
-      <div class="field"><label><span class="yougo" title="制約：予算・環境など、開発上の前提条件や注意点。">制約</span>・その他</label><div class="hosoku">予算や方針など、AIに伝えておきたいことがあれば書いてください。</div>
-	<input id="etc" placeholder="例：無料で進めたい、初心者なのでコード内コメントで解説して"></div>
+      <div class="field">
+        <label><span class="yougo" title="制約：予算・環境など、開発上の前提条件や注意点。">制約</span>・その他</label>
+        <div class="hosoku">予算や方針など、AIに伝えておきたいことがあれば書いてください。</div>
+        <input id="etc" placeholder="例：無料で進めたい、初心者なのでコード内コメントで解説して">
+      </div>
 
-      <div class="button-bar"><button id="genBtn" type="button" class="btn btn-shuyou">プロンプト生成</button><button id="clearBtn" type="button" class="btn btn-huku">入力情報の全クリア</button></div>
+      <div class="button-bar">
+        <button id="genBtn" type="button" class="btn btn-shuyou">プロンプト生成</button>
+        <button id="clearBtn" type="button" class="btn btn-huku">入力情報の全クリア</button>
+      </div>
     </div>
 
     <div class="output-area" aria-label="生成結果">
-
-      <div class="output-header"><label for="output" style="font-weight:bold;">出力（AIに渡すプロンプト）</label>
-
-	<button id="copyBtn" type="button" class="btn btn-huku">コピー</button></div>
-
+      <div class="output-header">
+        <label for="output" style="font-weight:bold;">出力（AIに渡すプロンプト）</label>
+        <button id="copyBtn" type="button" class="btn btn-huku">コピー</button>
+      </div>
       <textarea id="output" spellcheck="false" placeholder="ここに生成結果が表示されます。"></textarea>
     </div>
   </div>
 
-  <script>
-    // DOM要素をIDで取得する短縮関数。$ は jQueryの慣習
-    const $ = id => document.getElementById(id);
-
-    // フォームの各IDをまとめて管理する配列
-    const formIDs = ['category','functions','goal','target','platform','technologies','hardware','skills','ui','schedule','etc'];
-
-    // 出力欄の要素
-    const output = $('output');
-
-    // クリックイベントを登録するヘルパー関数
-    function onClick(element, handler){ element.addEventListener('click', handler); }
-
-    // クリップボードにテキストをコピーする関数（Clipboard API を利用）
-    async function copyTextToClipboard(text){ await navigator.clipboard.writeText(text); }
-
-    // ボタンの動作を割り当て
-    onClick($('genBtn'), () => { output.value = makePrompt(readInputs()); });
-    onClick($('copyBtn'), () => { if(output.value) copyTextToClipboard(output.value); });
-    onClick($('clearBtn'), () => { formIDs.forEach(id => $(id).value=''); output.value=''; });
-
-    // 入力値を読み取りオブジェクト化
-    function readInputs(){ const v = id => $(id).value.trim();
-      return { category:v('category'), functions:v('functions'), goal:v('goal'), target:v('target'),
-	 platform:v('platform'), technologies:v('technologies'), hardware:v('hardware'), skills:v('skills'),
-	 ui:v('ui'), schedule:v('schedule'), etc:v('etc') }; }
-
-    // 入力が空だった場合の表示テキスト
-    const noValue = ()=>'未定';
-
-    // 入力データをもとにプロンプトを生成
-    function makePrompt(data){
-      return `## 目的\nあなたは最新の知識を持つエンジニアのアシスタントです。以下の情報をもとに、
-	初心者でも取り組みやすい開発手順を提案してください。\n
-	必要に応じて最新情報を調査し、エラーや疑問が出たときの解決策も提示してください。\n\n
-	---\n## アプリ概要\n1. 
-	**アプリのジャンル**: ${data.category||noValue()}\n2. 
-	**メイン機能**: ${data.functions||noValue()}\n3. 
-	**制作目的**: ${data.goal||noValue()}\n4. **ターゲット**: ${data.target||noValue()}\n5. 
-	**プラットフォーム**: ${data.platform||noValue()}\n6. 
-	**使いたい言語・技術・サービス**: ${data.technologies||noValue()}\n7. **ハードウェア**: ${data.hardware||noValue()}\n8. 
-	**スキル・学習情報**: ${data.skills||noValue()}\n9. **UI**: ${data.ui||noValue()}\n10. 
-	**スケジュール**: ${data.schedule||noValue()}\n11. 
-	**制約・その他**: ${data.etc||noValue()}\n\n---\n## 指示\n
-	- このアプリを実装する**難易度・コスト・おおよその作業時間**を簡潔に示してください。\n
-	- 多機能になりそうな場合は、まず **最小限の動作確認ができるバージョン（MVP）** を作り、次に追加する機能を段階的に提案してください。\n
-	- 使用する**主要なツール・サービス・ライブラリや技術**（無料があれば優先）を具体的に挙げ、選んだ理由を一言添えてください。\n
-	- 必要な準備や情報で不明な点があれば、**初心者でも答えやすい短い質問**として列挙してください。\n
-	- 実装の手順は、**番号付きリスト**でステップごとに整理してください。\n
-	- **矛盾点や実装が難しい点**があれば指摘し、必要に応じて外部の参考情報をWeb検索して提示してください（例：ノーコードツール、生成AIサービス）。\n
-	- **最後に**「このあと着手すべき最初のステップ」を1文で提示してください。`; }
-  </script>
+  <script src="kaniYoukenteigi.js"></script>
 </body>
 </html>
