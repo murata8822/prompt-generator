@@ -4,102 +4,148 @@
   <meta charset="utf-8">
   <title>プロンプトジェネレーター（トップページ）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
+  <!-- フォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-
-
-    /* 基本の見た目設定 */
-
-    :root {
-      --mainColor:#2563eb;       /* 基本カラー（青） */
-      --menuYokohaba:200px;      /* 左メニューの幅 */
-    }
-
     body {
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
       margin:0;
-      line-height:1.6;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      background: linear-gradient(to bottom right, #b2f0e6, #98e0d1);
+      height:100vh;
+      overflow:hidden;
     }
 
-    /* 左右の2カラム構造 */
-
-    .container {
-      display:flex;               /* 横に並べる */
-      min-height:100vh;           /* 画面全体の高さに合わせる */
-    }
-
-    /* 左メニュー */
-
+    /* サイドメニュー */
     .menu {
-      width:var(--menuYokohaba);  /* 幅を固定 */
-      border-right:1px solid #ccc;/* 仕切り線 */
+      position:fixed;
+      top:0;
+      left:0;
+      height:100%;
+      width:250px;
+      background:#f5fffa;
+      box-shadow:4px 0 10px rgba(0,0,0,0.1);
       padding:20px;
       box-sizing:border-box;
+      transition: width 0.3s ease;
+      overflow:hidden;
+    }
+
+    .menu.collapsed {
+      width:50px; /* 細いバーだけ残す */
     }
 
     .menu h2 {
+      margin-top:0;
       font-size:1em;
-      margin:0 0 12px;
+      white-space:nowrap;
+      transition:opacity 0.3s ease;
+    }
+
+    .menu.collapsed h2,
+    .menu.collapsed .menu-btn {
+      opacity:0; /* メニュー閉じたらテキスト非表示 */
+      pointer-events:none;
     }
 
     .menu-btn {
       display:block;
-      padding:10px;
-      border:1px solid #ccc;
-      border-radius:8px;
+      margin-top:20px;
+      padding:12px;
+      border:none;
+      border-radius:12px;
       text-align:center;
       text-decoration:none;
-      color:#000;
-      background:#f9f9f9;
+      color:#0d3b2e;
+      background:#ffffff;
+      box-shadow:0 4px 8px rgba(0,0,0,0.1);
+      transition:all 0.2s ease;
+      font-weight:700;
     }
 
     .menu-btn:hover {
-      background:#eee;
+      background:#98e0d1;
+      color:#ffffff;
+      transform:translateY(-2px);
     }
 
-    /* 右本文エリア（中央揃え） */
+    /* トグルボタン */
+    .toggle-btn {
+      position:absolute;
+      top:10px;
+      right:10px;
+      background:none;
+      border:none;
+      font-size:20px;
+      font-weight:bold;
+      color:#333; /* 見やすい濃い色 */
+      cursor:pointer;
+      transition:transform 0.2s ease;
+    }
 
+    /* 本文エリア */
     .content {
-      flex:1;                     
+      margin-left:250px;
+      height:100vh;
       display:flex;
-      flex-direction:column;      /* 縦方向に積む */
-      justify-content:center;     /* 上下中央 */
-      align-items:center;         /* 左右中央 */
-      text-align:center;          /* 文字も中央寄せ */
-      padding:40px;
-      box-sizing:border-box;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      text-align:center;
+      transition: margin-left 0.3s ease;
+    }
+
+    .collapsed + .content {
+      margin-left:50px; /* 細いバーにあわせる */
+    }
+
+    .content img {
+      width:300px;
+      margin-bottom:20px;
+    }
+
+    .content h1 {
+      font-size:2.3rem;
+      margin:10px 0;
+      color:#233;
+    }
+
+    .content p {
+      font-size:1.1rem;
+      color:#444;
+      margin:0;
     }
   </style>
 </head>
 <body>
+  <!-- サイドメニュー -->
+  <nav class="menu" id="menu">
+    <button class="toggle-btn" id="toggleBtn">←</button>
+    <h2>メニュー</h2>
+    <a href="kaniYoukenteigi.html" class="menu-btn">要件定義（簡易）</a>
+  </nav>
 
-  <!-- ページ全体：左メニュー + 右カラム -->
-
-  <div class="container">
-    
-    <!-- 左カラム：固定メニュー -->
-
-    <nav class="menu">
-      <h2>メニュー</h2>
-      <!-- 要件定義ページへのリンク -->
-      <a href="kaniYoukenteigi.html" class="menu-btn">要件定義（簡易）</a>
-    </nav>
-
-    <!-- 右カラム：トップページ本文 -->
-
-    <main class="content">
-      <h1>プロンプトジェネレーター</h1>
-      <p>
-        AIに送る命令を効率よく作れるツールです。<br>
-        左のメニューから作りたい項目を選んでください。
-      </p>
-    </main>
-
-  </div>
+  <!-- コンテンツ -->
+  <main class="content" id="content">
+    <img src="gazou/top_icon.png" alt="サイトアイコン">
+    <h1>プロンプトジェネレーター</h1>
+    <p>
+      AIに送る命令を効率よく作れるツールです。<br>
+      左のメニューから作りたい項目を選んでください。
+    </p>
+  </main>
 
   <script>
+    const menu = document.getElementById("menu");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const content = document.getElementById("content");
 
-    console.log("index.html が読み込まれました");
+    toggleBtn.addEventListener("click", () => {
+      menu.classList.toggle("collapsed");
+      content.classList.toggle("collapsed");
+      toggleBtn.textContent = menu.classList.contains("collapsed") ? "→" : "←";
+    });
   </script>
 </body>
 </html>
