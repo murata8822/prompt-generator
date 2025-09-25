@@ -1,0 +1,129 @@
+<!doctype html>
+<!--
+  ファイル名: kaniYoukenteigi.html
+  説明: 要件定義プロンプトジェネレーターの本体HTML。
+  目的: 入力フォームを提供し、CSSとJSを読み込み、共通メニューも利用できるようにする。
+-->
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>プロンプトジェネレーター（簡易要件定義）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- フォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- 共通メニューCSS -->
+  <link rel="stylesheet" href="css/menu.css">
+  <!-- 要件定義用CSS -->
+  <link rel="stylesheet" href="css/kaniYoukenteigi.css">
+</head>
+<body>
+  <!-- サイドメニュー -->
+  <nav class="menu" id="menu">
+    <button class="toggle-btn" id="toggleBtn">←</button>
+    <h2>メニュー</h2>
+    <a href="index.html" class="menu-btn">トップページ</a>
+    <a href="kaniYoukenteigi.html" class="menu-btn">要件定義（簡易）</a>
+  </nav>
+
+  <!-- コンテンツ -->
+  <main class="content" id="content">
+    <h1>プロンプトジェネレーター（簡易要件定義）</h1>
+    <p class="description">
+      ここで<span class="yougo" title="要件定義：開発の目的・機能・制約などを整理し、関係者で共通認識を持つための工程。">要件定義</span>
+      プロンプトを作成しておくと、AIとのすれ違いを減らし、効率的に開発を進められます。
+    </p>
+
+    <div class="container">
+      <!-- 入力欄 -->
+      <div class="input-area">
+        <div class="field">
+          <label>アプリのジャンル</label>
+          <div class="hosoku">どんなアプリを作りますか？</div>
+          <input id="category" placeholder="例：シューティングゲーム、シンプル家計簿、服薬管理">
+        </div>
+
+        <div class="field">
+          <label>メイン機能</label>
+          <div class="hosoku">このアプリの主な機能を説明してください。</div>
+          <input id="functions" placeholder="例：敵を倒してスコアを競う、収支をグラフ化、指定の時間に通知">
+        </div>
+
+        <div class="field">
+          <label>制作目的</label>
+          <div class="hosoku">このアプリを作る目的は何ですか？</div>
+          <input id="goal" placeholder="例：プログラミング練習、自分の生活で使いたい、ポートフォリオ用">
+        </div>
+
+        <div class="field">
+          <label><span class="yougo" title="ターゲットユーザー：アプリを一番使ってほしい想定利用者層。UIや難易度の調整に重要。">ターゲットユーザー</span></label>
+          <div class="hosoku">想定ユーザーはどんな人ですか？</div>
+          <input id="target" placeholder="例：小学生、自分、お年寄り">
+        </div>
+
+        <div class="field">
+          <label>プラットフォーム</label>
+          <div class="hosoku">どこでアプリを動かしますか？</div>
+          <input id="platform" placeholder="例：Webサイト、Android、決まっていない">
+        </div>
+
+        <div class="field">
+          <label>使いたい言語・技術・サービス</label>
+          <div class="hosoku">あれば書いてください。API名・クラウドサービス・フレームワークなど</div>
+          <input id="technologies" placeholder="例：Java、React、Firebase、OpenWeatherMap API">
+        </div>
+
+        <div class="field">
+          <label><span class="yougo" title="ハードウェア：センサーやマイコンなど、プログラム外で動作する部品や機器。">ハードウェア</span>を使用しますか？</label>
+          <div class="hosoku">あれば書いてください。型番もわかれば書いてください。</div>
+          <input id="hardware" placeholder="例：Arduino UNO、LED、温度センサー">
+        </div>
+
+        <div class="field">
+          <label>スキル・学習情報</label>
+          <div class="hosoku">AIのサポートの参考になる学習情報を記入してください。</div>
+          <input id="skills" placeholder="例：プログラミング未経験、Java Silver学習中、C言語のみ経験">
+        </div>
+
+        <div class="field">
+          <label><span class="yougo" title="UI：ユーザーインターフェース。画面の見た目や使いやすさ。">UI</span></label>
+          <div class="hosoku">見た目や雰囲気の希望があれば書いてください。</div>
+          <input id="ui" placeholder="例：カラフルでポップ、緑と白のシンプル、大きな文字でボタンが少ない">
+        </div>
+
+        <div class="field">
+          <label>スケジュール</label>
+          <div class="hosoku">製作期間や締め切りなどがあれば教えてください。</div>
+          <input id="schedule" placeholder="例：2週間後提出（1日2時間作業）">
+        </div>
+
+        <div class="field">
+          <label><span class="yougo" title="制約：予算・環境など、開発上の前提条件や注意点。">制約</span>・その他</label>
+          <div class="hosoku">予算や方針など、AIに伝えておきたいことがあれば書いてください。</div>
+          <input id="etc" placeholder="例：無料で進めたい、初心者なのでコード内コメントで解説して">
+        </div>
+
+        <div class="button-bar">
+          <button id="genBtn" type="button" class="btn btn-shuyou">プロンプト生成</button>
+          <button id="clearBtn" type="button" class="btn btn-huku">入力情報の全クリア</button>
+        </div>
+      </div>
+
+      <!-- 出力欄 -->
+      <div class="output-area" aria-label="生成結果">
+        <div class="output-header">
+          <label for="output" style="font-weight:bold;">出力（AIに渡すプロンプト）</label>
+          <button id="copyBtn" type="button" class="btn btn-huku">コピー</button>
+        </div>
+        <textarea id="output" spellcheck="false" placeholder="ここに生成結果が表示されます。"></textarea>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS 読み込み -->
+  <script src="js/menu.js"></script>
+  <script src="js/kaniYoukenteigi.js"></script>
+</body>
+</html>

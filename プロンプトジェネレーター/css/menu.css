@@ -1,0 +1,88 @@
+/*
+  ファイル名: menu.css
+  役目: サイドメニューの見た目を整えるスタイル
+  備考: 開閉アニメーション・ボタンの装飾など
+*/
+
+/* メニュー全体 */
+.menu {
+  position: fixed;          /* 画面の左に固定する */
+  top: 0;
+  left: 0;
+  height: 100%;             /* 画面の高さぜんぶ */
+  width: 250px;             /* 通常の幅 */
+  background: #f5fffa;      /* 薄い緑っぽい背景 */
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.3s ease;  /* 開閉をなめらかに */
+  overflow: hidden;
+}
+
+/* メニューを閉じたとき */
+.menu.collapsed {
+  width: 50px;              /* 細いバーだけ残す */
+}
+
+/* タイトル（メニュー見出し） */
+.menu h2 {
+  margin-top: 0;
+  font-size: 1em;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+/* 閉じたときはタイトルやボタンを非表示にする */
+.menu.collapsed h2,
+.menu.collapsed .menu-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* メニュー内のボタン */
+.menu-btn {
+  display: block;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  color: #0d3b2e;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+/* ボタンにマウスをのせたとき */
+.menu-btn:hover {
+  background: #98e0d1;
+  color: #ffffff;
+  transform: translateY(-2px); /* 少し浮く */
+}
+
+/* メニューを開閉する矢印ボタン */
+.toggle-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;              /* 濃い文字色で見やすく */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+/* コンテンツ領域（右側） */
+.content {
+  margin-left: 250px;       /* メニューの分だけ右にずらす */
+  transition: margin-left 0.3s ease;
+}
+
+/* メニューが閉じたときのコンテンツ位置 */
+.collapsed + .content {
+  margin-left: 50px;        /* 細いバーにあわせて寄せる */
+}

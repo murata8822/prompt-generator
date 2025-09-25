@@ -1,0 +1,125 @@
+/*
+  ファイル名: kaniYoukenteigi.css
+  説明: 要件定義プロンプトジェネレーターのスタイル定義。
+  目的: レイアウト、色、間隔などを調整し、見やすくする。
+*/
+:root{
+  --mainColor:#2563eb;
+  --columnSukima:40px;
+  --fieldSukima:16px;
+  --inputPad:10px 12px;
+}
+
+/* 全体トーンはトップに合わせる */
+body{
+  font-family:'Zen Maru Gothic', system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+  margin:0;                        /* メニュー固定に合わせて0 */
+  line-height:1.6;
+  background:linear-gradient(to bottom right, #b2f0e6, #98e0d1);
+}
+
+/* メニューの分だけ本文を右にオフセット（menu.js が #content に collapsed を付与） */
+.content{
+  margin-left:250px;
+  padding:24px;
+  min-height:100vh;
+  box-sizing:border-box;
+}
+.content.collapsed{
+  margin-left:50px;
+}
+
+.description{margin:0 0 8px}
+
+/* 2カラム */
+.container{
+  display:flex;
+  gap:var(--columnSukima);
+  flex-wrap:wrap;
+}
+
+/* 入力カラム / 出力カラム */
+.input-area,
+.output-area{
+  flex:1 1 420px;
+  min-width:340px;
+  display:flex;
+  flex-direction:column;
+  background:#f5fffa;                 /* トップと統一した淡いカード */
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 各フィールド間隔 */
+.field + .field{margin-top:var(--fieldSukima)}
+
+.hosoku{
+  font-size:.9em;
+  color:#666;
+  margin-bottom:6px
+}
+.yougo{
+  color:var(--mainColor);
+  font-weight:700;
+  border-bottom:2px dotted var(--mainColor);
+  cursor:help;
+}
+
+/* 入力 / 出力 */
+input,textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:var(--inputPad);
+  border:1px solid #ccc;
+  border-radius:8px;
+  font:inherit;
+  background:#fff;                    /* 入力欄は純白 */
+}
+#output{
+  flex:1;
+  min-height:520px;
+  resize:none
+}
+
+/* ボタン */
+.btn{
+  padding:10px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  border:none;
+  transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.btn:hover{opacity:.95}
+.btn:active{transform:translateY(1px)}
+.btn-shuyou{
+  background:var(--mainColor);
+  color:#fff;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(37,99,235,.25);
+}
+.btn-huku{
+  background:#ffffff;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+/* 出力ヘッダーとボタン並び */
+.output-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+/* 下部ボタン並び */
+.button-bar{
+  margin-top:24px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px
+}
+
+/* 見出し少し太めに */
+h1{
+  margin:0 0 8px;
+}
